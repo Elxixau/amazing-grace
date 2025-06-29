@@ -117,9 +117,9 @@
                 <div class="col-lg-4 order-1 order-lg-2 mb-4">
                     <div class=" sticky-top " style="top: 80px; ">
                         <div class="card shadow">
-                            
-                            @if($post->banner_image)
-                                <img src="{{ asset('storage/' . $post->banner_image) }}" class="card-img-top" alt="{{ $post->title }}">
+                            @if($post)
+    @if($post && $post->banner_image)
+                                <img src="{{ asset('storage/'.$post->banner_image) }}" alt="Banner" />
                             @endif
 
                             <div class="card-body">
@@ -161,7 +161,16 @@
                                     <p class="card-textfs-2 mb-1 fs-lg"> {{ $post->location_details }}</p>
                                 @endif
                                     
-                        </div>
+                            </div>
+@else
+    <div class="card shadow mt-4">
+        <div class="card-body text-center text-muted">
+            <p>Tidak ada informasi event yang tersedia saat ini.</p>
+        </div>
+    </div>
+@endif
+
+                            
                         </div>
                             {{-- ✅ Card Preview (tidak sticky, ikut scroll biasa di bawah event) --}}
                             <div class="card shadow mt-4">
