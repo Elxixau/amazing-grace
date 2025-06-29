@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>{{ $title }} | {{ ucwords(str_replace('_', ' ', config('app.name'))) }}</title>
+   <title> {{config('app.name') }}</title>
    
     <!-- FAVICON -->
     <link href="{{ asset('images/LOGO. REV2.png') }}" rel="shortcut icon" />
@@ -15,19 +15,24 @@
 
         
         @include('includes.notification')
-     <div class="row mt-4">
+ 
+        <div class="dies d-flex flex-wrap justify-content-between align-items-center w-full">
+            <div class="text  d-flex align-items-center">
+                <img src="{{asset('images/LOGO. REV2.png')}}" class="mr-3"/>
+                <div class="text">
+                    <h1>Amazing Grace</h1> 
+                    <h3>Concert and Revival Service</h3>
+                </div>            
+            </div>
+            <p>"Around the World"</p>
+        </div>
+        <div class="row mt-4">
 
                 {{-- Kolom Form Tiket --}}
                 <div class="form col-lg-8 order-2 order-lg-1 mb-4">
-                    <div class="dies d-flex flex-wrap justify-content-between align-items-center">
-                        <div class="text">
-                            <h1><img src="{{asset('images/LOGO. REV2.png')}}" style="float:left " class="mr-3"/>Amazing Grace</h1>
-                            <h3>Concert and Revival Service</h3>
-                        </div>
-                        <p>"Around the World"</p>
-                    </div>
+                    
                     <div class="card form-tiket">
-                        <div class="card-header">Pesan Tiket</div>
+                        <div class=" p-4 fw-bolder   ">Pesan Tiket</div>
 
                         
                         <div class="card-body">
@@ -60,32 +65,33 @@
 
                                     <div class="form-group">
                                         <label>Pilih Group Kursi:</label>
-                                        <div class="seat-radio-buttons">
+                                        <div class="seat-radio-buttons text-center">
                                             <div class="row">
                                                 @foreach($seatGroup as $group)
-                                                    <div class="col-md-6 col-lg-6 mb-4 d-flex align-items-stretch">
-                                                        <div class="card text-center w-100">
-                                                            <div class="card-header">Group</div>
+                                                    <div class="col-md-6 col-lg-6  d-flex align-items-stretch">
+                                                        <label class="card group-card text-center w-100" for="seat_{{ $group->group_code }}">
+                                                            <div class="p-2">Group</div>
                                                             <div class="card-body">
-                                                                <label class="form-check-label seat-label" for="seat_{{ $group->group_code }}">
-                                                                    {{ $group->group_name }}
-                                                                </label>
-                                                                <p class="card-text">Sisa Kuota: <strong>{{ $group->quota }}</strong></p>
+                                                                <h5 class="card-title">{{ $group->group_name }}</h5>
+                                                                <p class="card-text" >Sisa Kuota: <p style="font-weight:700; background-color: #f0ff46; padding: 5px 10px 5px 10px ; border-radius:12px">{{ $group->quota }}</p></p>
                                                                 <input type="radio"
-                                                                    class="form-check-input seat-radio mt-2"
                                                                     id="seat_{{ $group->group_code }}"
                                                                     name="seat_group"
                                                                     value="{{ $group->group_code }}">
+                                                                    
                                                             </div>
-                                                            <div class="card-footer text-muted">
-                                                                {{ optional($group->updated_at)->translatedFormat('d F Y') }}
-                                                            </div>
-                                                        </div>
+                                                            
+                                                        </label>
                                                     </div>
                                                 @endforeach
                                             </div>
                                         </div>
                                     </div>
+                                    <center>
+                                        <span class="text-white ">
+                                            Cek preview pesanan anda sebelum melakukan booking
+                                        </span>
+                                    </center>
                                 </form>
 
                         </div>
@@ -160,7 +166,7 @@
                             {{-- ✅ Card Preview (tidak sticky, ikut scroll biasa di bawah event) --}}
                             <div class="card shadow mt-4">
                                 <div class="card-body">
-                                    <h6 class="text-primary">Preview Pemesanan Anda</h6>
+                                    <p class="text-warning ">Preview Pemesanan Anda</p>
                                     <table class="table table-sm table-borderless mb-0">
                                         <tr>
                                             <th class="text-muted">Nama</th>
@@ -179,10 +185,10 @@
                                             <td id="previewGroup">-</td>
                                         </tr>
                                     </table>
-
                                     <div class="text-center mt-3">
-                                        <button type="submit" class="btn btn-warning w-100" form="bookingForm">
-                                            🎟 Booking Tiket
+                                        <button type="submit" class="btn btn-warning btn-md w-100" id="submitBtn" form="bookingForm">
+                                            <span id="submitText">🎟 Booking Tiket</span>
+                                            <div id="submitSpinner" class="spinner-border spinner-border-sm text-light ms-2 d-none" role="status"></div>
                                         </button>
                                     </div>
                                 </div>
@@ -200,30 +206,8 @@
             </div>
     </div>
 @include('includes.script')
-<script>
-function updatePreview() {
-    document.getElementById('previewName').textContent = document.getElementById('name').value || '-';
-    document.getElementById('previewEmail').textContent = document.getElementById('email').value || '-';
+<script src="{{ asset('js/booking.js') }}"></script>
 
-    const seat = document.querySelector('input[name="seat_count"]:checked');
-    document.getElementById('previewSeat').textContent = seat ? seat.value : '-';
-
-    const group = document.querySelector('input[name="seat_group"]:checked');
-    const groupLabel = group ? document.querySelector('label[for="' + group.id + '"]')?.textContent : '-';
-    document.getElementById('previewGroup').textContent = groupLabel || '-';
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('name').addEventListener('input', updatePreview);
-    document.getElementById('email').addEventListener('input', updatePreview);
-    document.querySelectorAll('input[name="seat_count"]').forEach(el =>
-        el.addEventListener('change', updatePreview)
-    );
-    document.querySelectorAll('input[name="seat_group"]').forEach(el =>
-        el.addEventListener('change', updatePreview)
-    );
-});
-</script>
 
 </body>
 </html>

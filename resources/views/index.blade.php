@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> {{ ucwords(str_replace('_', ' ', config('app.name'))) }}</title>
+    <title> {{config('app.name') }}</title>
     <link href="{{ asset('images/LOGO. REV2.png') }}" rel="shortcut icon" />
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     @include('includes.link')
@@ -131,7 +131,7 @@
                     <hr  style="height:1px;border-width:0;color:gray;background-color:gray">
                 </div>
                 <div id="book" class="col-lg-15 ">
-                <h4 class="section-title mt-5 mb-3">Tiket</h4>
+                    <h4 class="section-title mt-5 mb-3">Tiket</h4>
                     <div class="book ">
                         <div class="container">
                             <center>
@@ -143,7 +143,8 @@
                                 </div>
                             </center>
                         </div>
-                    </div>  
+                    </div> 
+                     
                 </div>
             </div>
         </div>

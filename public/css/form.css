@@ -7,7 +7,7 @@
     justify-content: center;
     display: flex;
     text-align: center;
-    margin: 30px;
+    margin: 20px;
     font-family: poppins;
 }
 
@@ -35,16 +35,13 @@
 .dies p {
     color: #E9C067;
     font-size: 35px;
-    line-height: 12px;
+    font-weight: 800;
 }
 
-.form .card{
-    background: rgba(90, 90, 90, 0.723) 92.18%;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25), 0px -4px 20px rgba(0, 0, 0, 0.25);
-}
+
 
 .card-header, label{
-    color: #E9C067;
+    color: #000000;
 }
 
 .card{
@@ -54,17 +51,27 @@
 .donation{
     color: #FFFFFF;
 }
-    
-    .form-check-input.seat-radio{
-        width: 20px; /* Lebar checkbox */
-        height: 20px; /* Tinggi checkbox */ /* Jarak antara checkbox */
+
+
+    .group-card {
+        transition: 0.3s;
+        cursor: pointer;
+        border: 2px solid #dee2e6;
     }
 
-    .form-check-label.seat-label {
-        font-size: 16px; /* Ukuran teks label */
+    .group-card:hover {
+        border-color: #4A148C;
+        box-shadow: 0 0 10px rgba(74, 20, 140, 0.1);
     }
 
+    .group-card.selected {
+        border-color: #4A148C;
+        background-color: #f8f0fc;
+    }
 
+    .group-card input[type="radio"] {
+        display: none;
+    }
 
 @media (max-width: 400px) {
 

@@ -15,4 +15,9 @@ class Ticket extends Model
     {
         return $this->hasOne(QrAccess::class, 'ticket_id', 'ticket_id');
     }
+
+    public function group()
+{
+    return $this->belongsTo(TicketGroup::class, 'seat_group', 'group_code');
+}
 }

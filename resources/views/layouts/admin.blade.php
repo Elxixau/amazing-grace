@@ -8,10 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>@yield('title') |  {{ ucwords(str_replace('_', ' ', config('app.name'))) }}</title>
+    <title>@yield('title') |  {{ ('app.name') }}</title>
 
 
-    @stack('styles') 
+    @stack('styles')
     
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
@@ -98,7 +98,7 @@
 
     <li class="{{ request()->routeIs('admin.ticket.*') ? 'active' : '' }}">
         <a class="sidenav-item-link" href="{{ route('admin.ticket.index') }}">
-            <i class="mdi mdi-image-filter-none"></i>
+            <i class="mdi mdi-ticket"></i>
             <span class="nav-text">Ticket</span>
         </a>
     </li>
@@ -240,17 +240,12 @@
                                     <span class="d-none d-lg-inline-block">{{ Auth::user()->name }}</span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li>
-                                        <a class="dropdown-link-item" href="user-profile.html">
-                                            <i class="mdi mdi-account-outline"></i>
-                                            <span class="nav-text">My Profile</span>
-                                        </a>
-                                    </li>
+                                    
                                     
                                     <li>
-                                        <a class="dropdown-link-item" href="user-account-settings.html">
+                                        <a class="dropdown-link-item" href="{{route('admin.profile.index')}}">
                                             <i class="mdi mdi-settings"></i>
-                                            <span class="nav-text">Account Setting</span>
+                                            <span class="nav-text">Profile Setting</span>
                                         </a>
                                     </li>
 
@@ -330,35 +325,8 @@
     @stack('scripts')
 
 
-    <!--  -->
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const toggler = document.querySelector(".notify-toggler");
-        const dropdown = document.querySelector(".dropdown-notify");
+    <script src="{{ asset('js/admin-layout.js') }}"></script>
 
-        if (toggler && dropdown) {
-            toggler.addEventListener("click", function (e) {
-                e.stopPropagation();
-                dropdown.classList.toggle("show");
-            });
-
-            document.addEventListener("click", function () {
-                dropdown.classList.remove("show");
-            });
-
-            dropdown.addEventListener("click", function (e) {
-                e.stopPropagation();
-            });
-        }
-
-        const refreshBtn = document.getElementById("refress-button");
-        if (refreshBtn) {
-            refreshBtn.addEventListener("click", function () {
-                location.reload();
-            });
-        }
-    });
-</script>
 
 
 </body>

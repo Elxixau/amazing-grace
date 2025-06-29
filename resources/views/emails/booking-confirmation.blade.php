@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tiket Anda</title>
+    <title> {{config('app.name') }}</title>
     <style>
             
     /* CSS */
@@ -90,7 +90,7 @@
                 </tr>
                 <tr>
                     <td><strong>Group Seat</strong></td>
-                    <td style="text-align: right;">{{$ticket->seat_group}}</td>
+                    <td style="text-align: right;">{{$ticket->group->group_name}}</td>
                 </tr>
     
             </table>

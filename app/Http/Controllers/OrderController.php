@@ -47,10 +47,11 @@ class OrderController extends Controller
     }
 
 
-   
+
+
 public function store(Request $request)
 {
-     $request->validate([
+    $request->validate([
         'name' => 'required|string',
         'email' => 'required|email',
         'seat_count' => 'required|integer|min:1|max:3',
@@ -95,10 +96,14 @@ public function store(Request $request)
         'is_scanned' => false,
     ]);
 
+    // Muat relasi agar di Blade email bisa pakai $ticket->group->group_name
+    $ticket->load('group');
+
     // Kirim email tiket
     Mail::to($request->email)->send(new TicketMail($ticket, $qrUrl));
 
     return redirect()->route('create')->with('success', 'Tiket berhasil dipesan. Cek email Anda (atau folder SPAM).');
 }
+
 
 }

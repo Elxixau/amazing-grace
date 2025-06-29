@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\TicketSettingController;
 use App\Http\Controllers\Admin\RouteLogController;
+use App\Http\Controllers\Admin\ProfileController;
 
 
 
@@ -30,6 +31,17 @@ Route::get('/', [OrderController::class, 'home'])->name('home');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::prefix('password')->name('password.')->group(function () {
+
+Route::get('/forgot-password', [AuthController::class, 'showReset'])->name('request');
+Route::post('/email', [AuthController::class, 'sendResetLink'])->name('email');
+Route::get('/reset/{token}', [AuthController::class, 'showNewPasswordForm'])->name('reset');
+Route::post('/reset', [AuthController::class, 'resetPassword'])->name('update');
+
+});
+
+
 
 
 // Dashboard protected by auth
@@ -81,6 +93,13 @@ Route::middleware(['auth', 'role:superadmin,admin'])->prefix('admin')->name('adm
             return view('admin.posts.partials.guest_star', ['index' => $index]);
         })->name('guest_template');
         Route::patch('/{slug}/toggle-show', [PostController::class, 'toggleShow'])->name('toggle-show');
+    });
+
+
+    Route::prefix('profile')->name('profile.')->group(function(){
+        Route::get('/', [ProfileController::class, 'index'])->name('index');
+        Route::post('/edit', [ProfileController::class, 'edit'])->name('edit');
+        
     });
 });
 
