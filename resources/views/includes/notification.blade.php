@@ -6,11 +6,14 @@
     </div>    
 @endif
 
-{{-- ❌ Alert Error (custom error from session) --}}
-@if(session('error'))
+@if (isset($errors) && $errors->any())
     <div class="alert alert-danger alert-icon d-flex align-items-center" role="alert">
         <i class="mdi mdi-alert-circle-outline me-2"></i>
-        <p class="mb-0">{{ session('error') }}</p>
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
 @endif
 
@@ -30,17 +33,13 @@
     </div>
 @endif
 
-{{-- ❗ Validasi Error (dari $errors) --}}
-@if($errors->any())
-    <div class="alert alert-danger alert-icon" role="alert">
-        <i class="mdi mdi-close-circle-outline me-2"></i>
-        <div>
-            <strong>Terjadi kesalahan:</strong>
-            <ul class="mb-0 mt-1 ps-3">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+@if (isset($errors) && $errors->any())
+    <div class="alert alert-danger alert-icon d-flex align-items-center" role="alert">
+        <i class="mdi mdi-alert-circle-outline me-2"></i>
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
 @endif
